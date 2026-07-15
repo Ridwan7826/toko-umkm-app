@@ -1,0 +1,26 @@
+@startuml
+|Pembeli|
+start
+:Buka Halaman Login/Register;
+if (Sudah punya akun?) then (Ya)
+  :Masukkan Email & Password;
+else (Belum)
+  :Isi Form Registrasi;
+  :Submit Data;
+  |Sistem|
+  :Validasi & Simpan Data;
+endif
+|Sistem|
+:Verifikasi Kredensial;
+if (Valid?) then (Ya)
+  :Buat Session;
+  |Pembeli|
+  :Masuk ke Halaman Utama;
+else (Tidak)
+  |Sistem|
+  :Tampilkan Pesan Error;
+  |Pembeli|
+  :Kembali ke Halaman Login;
+endif
+stop
+@enduml

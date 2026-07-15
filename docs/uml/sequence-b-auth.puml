@@ -1,0 +1,29 @@
+@startuml
+actor Pembeli
+boundary View
+control AuthController
+entity UserModel
+database Database
+
+Pembeli -> View: Buka Halaman Login/Register
+alt Sudah punya akun?
+    Pembeli -> View: Submit Email & Password
+    View -> AuthController: POST /login
+else Belum
+    Pembeli -> View: Submit Form Registrasi
+    View -> AuthController: POST /register
+    AuthController -> UserModel: register(data)
+    UserModel -> Database: INSERT users
+    Database --> UserModel: OK
+    UserModel --> AuthController: User object
+end
+
+AuthController -> AuthController: Auth::attempt()
+alt Valid Kredensial?
+    AuthController --> View: Redirect ke Halaman Utama (Session created)
+    View --> Pembeli: Tampilkan Dashboard
+else Tidak Valid
+    AuthController --> View: Redirect back with Errors
+    View --> Pembeli: Tampilkan Pesan Error
+end
+@enduml

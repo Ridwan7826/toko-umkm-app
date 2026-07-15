@@ -1,0 +1,19 @@
+@startuml
+|Penjual|
+start
+:Buka Menu Produk;
+:Isi Form Tambah/Edit Produk;
+:Tambah Varian (Warna/Ukuran);
+:Set Harga & Stok Varian;
+:Upload Gambar;
+:Klik Simpan;
+|Sistem|
+:Validasi Data;
+if (Data Valid?) then (Ya)
+  :Simpan Produk & Varian (One-to-Many);
+  :Tampilkan Pesan Sukses;
+else (Tidak)
+  :Tampilkan Error Validasi;
+endif
+stop
+@enduml

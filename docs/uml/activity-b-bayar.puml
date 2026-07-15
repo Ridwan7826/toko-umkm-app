@@ -1,0 +1,25 @@
+@startuml
+|Pembeli|
+start
+:Buka Halaman Pesanan (Menunggu Pembayaran);
+:Klik Bayar;
+|Sistem|
+:Kirim Request Token Transaksi;
+|API Midtrans|
+:Generate Snap Token;
+:Return Token;
+|Sistem|
+:Tampilkan Pop-up Midtrans;
+|Pembeli|
+:Pilih Metode & Bayar;
+|API Midtrans|
+:Kirim Webhook Callback;
+|Sistem|
+:Verifikasi Callback;
+if (Pembayaran Sukses?) then (Ya)
+  :Ubah Status Pesanan (Dibayar/Diproses);
+else (Gagal)
+  :Ubah Status Pesanan (Dibatalkan);
+endif
+stop
+@enduml

@@ -1,0 +1,131 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor LightYellow
+    BorderColor DarkBlue
+    ArrowColor Blue
+}
+
+class User {
+  - id: BigInt
+  - name: String
+  - email: String
+  - password: String
+  - role: Enum [pembeli, penjual, admin]
+  - created_at: Timestamp
+  - updated_at: Timestamp
+  + register(data)
+  + login(credentials)
+  + updateProfile(data)
+}
+
+class Shop {
+  - id: BigInt
+  - user_id: BigInt
+  - name: String
+  - description: Text
+  - logo: String
+  - city_id: Int
+  - address: Text
+  - status: Enum [pending, aktif, ditolak]
+  + registerShop(data)
+  + validateStatus(status)
+}
+
+class Category {
+  - id: BigInt
+  - name: String
+  - slug: String
+  + getProducts()
+}
+
+class Product {
+  - id: BigInt
+  - shop_id: BigInt
+  - category_id: BigInt
+  - name: String
+  - description: Text
+  - image: String
+  + addProduct(data)
+  + editProduct(data)
+  + deleteProduct()
+}
+
+class ProductVariant {
+  - id: BigInt
+  - product_id: BigInt
+  - sku: String
+  - name: String
+  - price: Decimal
+  - weight: Int
+  - stock: Int
+  + updateStock(quantity)
+  + isStockLow(): Boolean
+}
+
+class Cart {
+  - id: BigInt
+  - user_id: BigInt
+  - variant_id: BigInt
+  - quantity: Int
+  + addItem(variant, qty)
+  + removeItem(variant_id)
+  + updateQuantity(qty)
+  + calculateTotalWeight(): Int
+}
+
+class Order {
+  - id: BigInt
+  - user_id: BigInt
+  - shop_id: BigInt
+  - invoice_number: String
+  - total_product_price: Decimal
+  - shipping_cost: Decimal
+  - courier_name: String
+  - tracking_number: String
+  - status: Enum [Menunggu, Dibayar, Diproses, Dikirim, Selesai, Dibatalkan]
+  + createOrder(cart, courier)
+  + processOrder()
+  + shipOrder(tracking_number)
+  + completeOrder()
+  + cancelOrder(reason)
+}
+
+class OrderDetail {
+  - id: BigInt
+  - order_id: BigInt
+  - variant_id: BigInt
+  - quantity: Int
+  - price_per_unit: Decimal
+}
+
+class Payment {
+  - id: BigInt
+  - order_id: BigInt
+  - snap_token: String
+  - payment_method: String
+  - amount: Decimal
+  - status: Enum [Pending, Success, Failed]
+  + generateToken(order)
+  + handleWebhook(payload)
+}
+
+' Relationships Mapping
+User "1" -- "0..1" Shop : owns >
+User "1" -- "*" Order : places >
+User "1" -- "*" Cart : has >
+
+Shop "1" -- "*" Product : sells >
+Shop "1" -- "*" Order : receives >
+
+Category "1" -- "*" Product : categorizes >
+
+Product "1" *-- "1..*" ProductVariant : has >
+
+ProductVariant "1" -- "*" Cart : added_to >
+ProductVariant "1" -- "*" OrderDetail : referenced_in >
+
+Order "1" *-- "1..*" OrderDetail : contains >
+Order "1" -- "1" Payment : has >
+
+@enduml

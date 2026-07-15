@@ -1,0 +1,26 @@
+@startuml
+|Pembeli|
+start
+:Masuk ke Keranjang Belanja;
+:Pilih Produk untuk Checkout;
+|Sistem|
+:Tampilkan Halaman Checkout;
+|Pembeli|
+:Pilih Alamat Pengiriman;
+|Sistem|
+:Kirim Request Ongkir;
+|API RajaOngkir|
+:Hitung Tarif Ekspedisi;
+:Return Pilihan Tarif;
+|Sistem|
+:Tampilkan Pilihan Kurir & Harga;
+|Pembeli|
+:Pilih Kurir;
+|Sistem|
+:Hitung Total Bayar (Produk + Ongkir);
+|Pembeli|
+:Klik Buat Pesanan;
+|Sistem|
+:Simpan Pesanan (Status: Menunggu Pembayaran);
+stop
+@enduml

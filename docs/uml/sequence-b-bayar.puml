@@ -1,0 +1,33 @@
+@startuml
+actor Pembeli
+boundary View
+control PaymentController
+entity OrderModel
+database Database
+participant "API Midtrans" as Midtrans
+
+Pembeli -> View: Buka Halaman Pesanan (Klik Bayar)
+View -> PaymentController: GET /payment/{order_id}
+PaymentController -> OrderModel: find(order_id)
+OrderModel --> PaymentController: Order Data
+
+PaymentController -> Midtrans: API POST /snap/v1/transactions
+Midtrans --> PaymentController: Response Snap Token
+PaymentController --> View: Render View dengan Snap JS (Token)
+
+Pembeli -> View: Tampilkan Pop-up Midtrans (Pilih Metode)
+Pembeli -> Midtrans: Selesaikan Pembayaran di UI Midtrans
+
+== Asynchronous Webhook ==
+Midtrans -> PaymentController: POST /api/webhook/midtrans
+PaymentController -> PaymentController: Verifikasi Signature
+PaymentController -> OrderModel: find(order_id)
+alt Pembayaran Sukses?
+    PaymentController -> OrderModel: update(status='Dibayar')
+    OrderModel -> Database: UPDATE orders
+else Gagal/Expired
+    PaymentController -> OrderModel: cancelOrder(reason='Payment Failed/Expired')
+    OrderModel -> Database: UPDATE orders
+end
+PaymentController --> Midtrans: HTTP 200 OK
+@enduml

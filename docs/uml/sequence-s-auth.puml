@@ -1,0 +1,36 @@
+@startuml
+actor Penjual
+actor Administrator
+boundary View
+control ShopController
+entity ShopModel
+database Database
+
+Penjual -> View: Buka Halaman Buka Toko
+Penjual -> View: Submit Form Pendaftaran
+View -> ShopController: POST /shop/register
+ShopController -> ShopModel: registerShop(data, status='pending')
+ShopModel -> Database: INSERT shops
+Database --> ShopModel: OK
+ShopModel --> ShopController: Shop object
+ShopController --> View: Tampilkan Pesan Sukses Menunggu Validasi
+
+== Proses Validasi Admin ==
+Administrator -> View: Buka Halaman Validasi Toko
+View -> ShopController: GET /admin/shops/pending
+ShopController -> ShopModel: getPendingShops()
+ShopModel --> ShopController: collection
+ShopController --> View: Tampilkan Daftar
+
+Administrator -> View: Klik Setujui/Tolak
+View -> ShopController: POST /admin/shops/{id}/validate
+alt Validasi Sukses?
+    ShopController -> ShopModel: validateStatus(status='aktif')
+    ShopModel -> Database: UPDATE shops
+    ShopController -> ShopController: Kirim Email Diterima
+else Ditolak
+    ShopController -> ShopModel: validateStatus(status='ditolak')
+    ShopModel -> Database: UPDATE shops
+    ShopController -> ShopController: Kirim Email Ditolak
+end
+@enduml

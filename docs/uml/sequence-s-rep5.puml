@@ -1,0 +1,35 @@
+@startuml
+actor Administrator
+boundary View
+control ReportController
+entity DataModel
+database Database
+
+Administrator -> View: Akses Halaman Rekap Platform
+alt Terapkan Filter Waktu/Status?
+    Administrator -> View: Input Filter & Terapkan
+    View -> ReportController: GET /report?start=...&end=...
+else Tanpa Filter Khusus
+    View -> ReportController: GET /report
+end
+
+ReportController -> DataModel: query data(filters)
+DataModel -> Database: SELECT aggregations
+Database --> DataModel: Result Set
+DataModel --> ReportController: Collection Data
+
+alt Pilih Export? (Cetak PDF)
+    Administrator -> View: Klik Export PDF
+    View -> ReportController: GET /report/export?type=pdf
+    ReportController -> ReportController: Generate PDF View
+    ReportController --> Administrator: Download PDF File
+else Pilih Export? (Excel)
+    Administrator -> View: Klik Export Excel
+    View -> ReportController: GET /report/export?type=excel
+    ReportController -> ReportController: Generate Spreadsheet
+    ReportController --> Administrator: Download Excel File
+else Hanya Tampilan Layar
+    ReportController --> View: return view('report', data)
+    View --> Administrator: Tampilkan Data Rekap Platform di Layar
+end
+@enduml

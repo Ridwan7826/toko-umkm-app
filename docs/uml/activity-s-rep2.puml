@@ -1,0 +1,27 @@
+@startuml
+|Administrator|
+start
+:Akses Laporan/Dashboard (Dashboard Rekap Platform);
+if (Terapkan Filter Waktu/Status?) then (Ya)
+  :Pilih Filter;
+  :Klik Terapkan;
+else (Tidak)
+endif
+|Sistem|
+:Query Database;
+:Agregasi Data;
+:Tampilkan Halaman;
+|Administrator|
+if (Pilih Export?) then (Cetak PDF)
+  |Sistem|
+  :Generate PDF;
+  :Kirim File ke Administrator;
+else if (Export Excel) then (Ya)
+  |Sistem|
+  :Generate Excel;
+  :Kirim File ke Administrator;
+else (Hanya Tampilan Layar)
+endif
+|Administrator|
+stop
+@enduml

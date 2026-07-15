@@ -1,0 +1,30 @@
+@startuml
+actor Penjual
+boundary View
+control ProductController
+entity ProductModel
+entity VariantModel
+database Database
+
+Penjual -> View: Buka Menu Tambah Produk
+Penjual -> View: Isi Form & Varian & Upload Gambar (Submit)
+View -> ProductController: POST /seller/products
+
+ProductController -> ProductController: Validasi Request Data
+alt Data Valid?
+    ProductController -> ProductModel: addProduct(product_data)
+    ProductModel -> Database: INSERT products
+    Database --> ProductModel: OK (product_id)
+    
+    loop Untuk Setiap Varian
+        ProductController -> VariantModel: create(variant_data + product_id)
+        VariantModel -> Database: INSERT variants
+    end
+    
+    ProductController -> ProductController: Store Image to Storage
+    ProductController --> View: Redirect dengan Pesan Sukses
+else Data Tidak Valid
+    ProductController --> View: Redirect Back with Errors
+end
+View --> Penjual: Tampilkan Halaman Daftar Produk
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+actor Penjual
+actor Pembeli
+boundary View
+control OrderController
+entity OrderModel
+database Database
+
+Penjual -> View: Buka Daftar Pesanan Masuk (Dibayar)
+Penjual -> View: Klik "Proses Pesanan"
+View -> OrderController: POST /seller/orders/{id}/process
+OrderController -> OrderModel: processOrder()
+OrderModel -> Database: UPDATE orders
+OrderController --> View: Refresh Daftar
+
+Penjual -> View: Siapkan Barang & Input Resi Pengiriman
+View -> OrderController: POST /seller/orders/{id}/ship
+OrderController -> OrderModel: shipOrder(tracking_number=resi)
+OrderModel -> Database: UPDATE orders
+OrderController -> OrderController: Trigger Notification (Mail/DB)
+OrderController --> View: Refresh Daftar Pesanan
+OrderController --> Pembeli: Kirim Notifikasi (Email: Barang Dikirim)
+@enduml

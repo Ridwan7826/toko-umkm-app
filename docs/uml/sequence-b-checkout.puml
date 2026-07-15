@@ -1,0 +1,28 @@
+@startuml
+actor Pembeli
+boundary View
+control CheckoutController
+entity OrderModel
+database Database
+participant "API RajaOngkir" as RajaOngkir
+
+Pembeli -> View: Buka Keranjang & Lanjut Checkout
+View -> CheckoutController: GET /checkout
+CheckoutController --> View: Tampilkan Halaman Checkout
+
+Pembeli -> View: Pilih Alamat Pengiriman
+View -> CheckoutController: POST /checkout/ongkir
+CheckoutController -> RajaOngkir: API POST /cost (alamat, berat)
+RajaOngkir --> CheckoutController: Response Tarif Ekspedisi
+CheckoutController --> View: Kembalikan Pilihan Kurir & Harga JSON
+
+Pembeli -> View: Pilih Kurir
+View -> View: Hitung Total Bayar via JavaScript
+Pembeli -> View: Klik Buat Pesanan
+View -> CheckoutController: POST /checkout/store (cart, kurir)
+CheckoutController -> OrderModel: createOrder(cart, courier)
+OrderModel -> Database: INSERT orders
+Database --> OrderModel: OK
+OrderModel --> CheckoutController: Order object
+CheckoutController --> View: Redirect Halaman Pembayaran
+@enduml

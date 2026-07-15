@@ -1,0 +1,17 @@
+@startuml
+|Penjual|
+start
+:Buka Daftar Pesanan Masuk;
+:Pilih Pesanan (Status: Dibayar);
+:Siapkan Barang;
+:Klik "Proses Pesanan";
+|Sistem|
+:Ubah Status -> "Diproses";
+|Penjual|
+:Kirim Barang & Input Resi;
+|Sistem|
+:Ubah Status -> "Dikirim";
+|Pembeli|
+:Terima Notifikasi Resi;
+stop
+@enduml

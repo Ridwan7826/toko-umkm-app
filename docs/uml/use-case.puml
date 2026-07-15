@@ -1,0 +1,100 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam usecase {
+  BackgroundColor LightBlue
+  BorderColor DarkBlue
+}
+skinparam actor {
+  BackgroundColor Gold
+  BorderColor Chocolate
+}
+
+actor "Pembeli (Customer)" as Pembeli
+actor "Penjual (UMKM)" as Penjual
+actor Administrator
+
+' External Systems
+actor "Payment Gateway\n(Midtrans)" as PG
+actor "Logistics API\n(RajaOngkir)" as Logistik
+
+rectangle "Sistem E-Commerce TokoKita" {
+  
+  ' Use Cases: Pembeli
+  package "Modul Pembeli" {
+    usecase "Registrasi & Login Akun" as UC_B_Auth
+    usecase "Cari & Lihat Produk" as UC_B_Cari
+    usecase "Kelola Keranjang Belanja" as UC_B_Keranjang
+    usecase "Checkout Pesanan" as UC_B_Checkout
+    usecase "Melakukan Pembayaran" as UC_B_Bayar
+    usecase "Melacak Status Pesanan" as UC_B_Lacak
+    usecase "Unduh Invoice (Report 8)" as UC_B_Invoice
+  }
+
+  ' Use Cases: Penjual
+  package "Modul Penjual" {
+    usecase "Registrasi & Kelola Toko" as UC_S_Toko
+    usecase "Kelola Produk & Varian" as UC_S_Produk
+    usecase "Proses & Update Status Pesanan" as UC_S_Order
+    
+    ' Laporan Penjual
+    usecase "Lihat Dashboard Performa (Report 1)" as UC_S_Rep1
+    usecase "Unduh Laporan Penjualan (Report 2)" as UC_S_Rep2
+    usecase "Lihat Laporan Produk Terlaris (Report 3)" as UC_S_Rep3
+    usecase "Unduh Laporan Stok Menipis (Report 4)" as UC_S_Rep4
+    usecase "Cetak Estimasi Pendapatan (Report 5)" as UC_S_Rep5
+    usecase "Unduh Laporan Pembatalan (Report 6)" as UC_S_Rep6
+    usecase "Cetak Data Pelanggan Loyal (Report 7)" as UC_S_Rep7
+    usecase "Cetak Invoice Pengiriman (Report 8)" as UC_S_Rep8
+  }
+
+  ' Use Cases: Administrator
+  package "Modul Administrator" {
+    usecase "Login Admin" as UC_A_Auth
+    usecase "Validasi Pendaftaran Toko" as UC_A_Validasi
+    usecase "Dashboard Rekap Platform (Report 9, 10)" as UC_A_Rep
+  }
+  
+  ' Include relationships for API integrations
+  usecase "Hitung Ongkos Kirim Otomatis" as UC_Hitung_Ongkir
+  usecase "Verifikasi Pembayaran Otomatis" as UC_Verif_Bayar
+}
+
+' ================= Relationships =================
+
+' Pembeli
+Pembeli --> UC_B_Auth
+Pembeli --> UC_B_Cari
+Pembeli --> UC_B_Keranjang
+Pembeli --> UC_B_Checkout
+Pembeli --> UC_B_Bayar
+Pembeli --> UC_B_Lacak
+Pembeli --> UC_B_Invoice
+
+' Penjual
+Penjual --> UC_S_Toko
+Penjual --> UC_S_Produk
+Penjual --> UC_S_Order
+Penjual --> UC_S_Rep1
+Penjual --> UC_S_Rep2
+Penjual --> UC_S_Rep3
+Penjual --> UC_S_Rep4
+Penjual --> UC_S_Rep5
+Penjual --> UC_S_Rep6
+Penjual --> UC_S_Rep7
+Penjual --> UC_S_Rep8
+
+' Administrator
+Administrator --> UC_A_Auth
+Administrator --> UC_A_Validasi
+Administrator --> UC_A_Rep
+
+' Dependencies & Includes
+UC_B_Checkout ..> UC_Hitung_Ongkir : <<include>>
+UC_Hitung_Ongkir --> Logistik
+
+UC_B_Bayar ..> UC_Verif_Bayar : <<include>>
+UC_Verif_Bayar --> PG
+
+@enduml

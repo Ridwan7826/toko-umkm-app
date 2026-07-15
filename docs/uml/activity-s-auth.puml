@@ -1,0 +1,20 @@
+@startuml
+|Penjual|
+start
+:Buka Halaman Buka Toko;
+:Isi Form Pendaftaran Toko;
+|Sistem|
+:Simpan Data Toko (Status: Pending);
+|Administrator|
+:Review Pendaftaran Toko;
+if (Validasi Sukses?) then (Ya)
+  |Sistem|
+  :Ubah Status Toko (Aktif);
+  :Kirim Email Diterima;
+else (Tidak)
+  |Sistem|
+  :Tolak Pendaftaran;
+  :Kirim Email Ditolak;
+endif
+stop
+@enduml
