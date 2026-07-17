@@ -1,0 +1,141 @@
+Enum user_role {
+  pembeli
+  penjual
+  admin
+}
+
+Enum shop_status {
+  pending
+  aktif
+  ditolak
+}
+
+Enum order_status {
+  menunggu_pembayaran
+  dibayar
+  diproses
+  dikirim
+  selesai
+  dibatalkan
+}
+
+Enum payment_status {
+  pending
+  success
+  failed
+  expired
+}
+
+Table users {
+  id bigint [primary key, increment]
+  name varchar [not null]
+  email varchar [unique, not null]
+  password varchar [not null]
+  role user_role [default: 'pembeli']
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [note: 'Soft delete untuk riwayat data']
+}
+
+Table shops {
+  id bigint [primary key, increment]
+  user_id bigint [ref: - users.id, unique, note: 'Satu user hanya memiliki satu toko']
+  name varchar [not null]
+  description text
+  logo varchar
+  city_id int [note: 'ID Kota dari API RajaOngkir']
+  address text
+  status shop_status [default: 'pending']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table categories {
+  id bigint [primary key, increment]
+  name varchar [not null]
+  slug varchar [unique, not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table products {
+  id bigint [primary key, increment]
+  shop_id bigint [ref: > shops.id]
+  name varchar [not null]
+  description text
+  image varchar
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [note: 'Mencegah kerusakan riwayat pesanan jika produk dihapus']
+}
+
+Table category_product {
+  category_id bigint [ref: > categories.id]
+  product_id bigint [ref: > products.id]
+}
+
+Table product_variants {
+  id bigint [primary key, increment]
+  product_id bigint [ref: > products.id]
+  sku varchar [unique]
+  name varchar [not null, note: 'Contoh: Ukuran M, Warna Merah']
+  price decimal(10,2) [not null]
+  weight int [not null, note: 'Dalam gram untuk perhitungan ongkir']
+  stock int [not null, default: 0]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp
+}
+
+Table carts {
+  id bigint [primary key, increment]
+  user_id bigint [ref: > users.id]
+  variant_id bigint [ref: > product_variants.id]
+  quantity int [not null, default: 1]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table orders {
+  id bigint [primary key, increment]
+  user_id bigint [ref: > users.id]
+  shop_id bigint [ref: > shops.id]
+  invoice_number varchar [unique, not null]
+  total_product_price decimal(10,2) [not null]
+  shipping_cost decimal(10,2) [not null]
+  courier_name varchar
+  tracking_number varchar [note: 'Nomor Resi']
+  status order_status [default: 'menunggu_pembayaran']
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp
+}
+
+Table order_details {
+  id bigint [primary key, increment]
+  order_id bigint [ref: > orders.id]
+  variant_id bigint [ref: > product_variants.id]
+  quantity int [not null]
+  price_per_unit decimal(10,2) [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table payments {
+  id bigint [primary key, increment]
+  order_id bigint [ref: - orders.id, unique, note: 'Satu pesanan memiliki satu pembayaran spesifik']
+  snap_token varchar [unique]
+  payment_method varchar
+  amount decimal(10,2) [not null]
+  status payment_status [default: 'pending']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table wishlists {
+  id bigint [primary key, increment]
+  user_id bigint [ref: > users.id]
+  product_id bigint [ref: > products.id]
+  created_at timestamp
+  updated_at timestamp
+}

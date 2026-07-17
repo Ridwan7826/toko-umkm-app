@@ -110,6 +110,23 @@ class Payment {
   + handleWebhook(payload)
 }
 
+class Wishlist {
+  - id: BigInt
+  - user_id: BigInt
+  - product_id: BigInt
+  - created_at: Timestamp
+}
+
+class ShopDailySale {
+  - id: BigInt
+  - shop_id: BigInt
+  - date: Date
+  - total_orders: Int
+  - gross_revenue: Decimal
+  - completed_orders: Int
+  - cancelled_orders: Int
+}
+
 ' Relationships Mapping
 User "1" -- "0..1" Shop : owns >
 User "1" -- "*" Order : places >
@@ -117,6 +134,7 @@ User "1" -- "*" Cart : has >
 
 Shop "1" -- "*" Product : sells >
 Shop "1" -- "*" Order : receives >
+Shop "1" -- "*" ShopDailySale : aggregates >
 
 Category "1" -- "*" Product : categorizes >
 
@@ -127,5 +145,8 @@ ProductVariant "1" -- "*" OrderDetail : referenced_in >
 
 Order "1" *-- "1..*" OrderDetail : contains >
 Order "1" -- "1" Payment : has >
+
+User "1" -- "*" Wishlist : has >
+Product "1" -- "*" Wishlist : favorited_in >
 
 @enduml
