@@ -20,8 +20,10 @@ use App\Http\Controllers\Buyer\CheckoutController;
 use App\Http\Controllers\Buyer\OrderController as BuyerOrderController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $categories = \App\Models\Category::withCount('products')->take(6)->get();
+    $popularProducts = \App\Models\Product::with(['shop', 'variants', 'categories'])->inRandomOrder()->take(8)->get();
+    return view('welcome', compact('categories', 'popularProducts'));
+})->name('home');
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])

@@ -36,6 +36,12 @@ Sistem ini dibangun di atas fondasi teknologi *open-source* modern:
 ### 1. Halaman Beranda (Katalog Publik)
 ![Halaman Utama](docs/screenshots/home.png)
 
+#### Katalog Kategori
+![Kategori Produk](docs/screenshots/kategori.png)
+
+#### Katalog Produk Terlaris
+![Produk Terlaris](docs/screenshots/produk_terlaris.png)
+
 ### 2. Detail Produk
 ![Detail Produk](docs/screenshots/product_detail.png)
 

@@ -175,6 +175,77 @@
         </div>
     </section>
 
+    <!-- Kategori Section -->
+    <section id="kategori" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900">Kategori Pilihan</h2>
+                    <p class="text-slate-500 mt-2">Temukan berbagai kebutuhan dari kategori terbaik</p>
+                </div>
+                <a href="#" class="text-emerald-600 font-medium hover:underline hidden sm:block">Lihat Semua</a>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                @foreach($categories as $category)
+                <a href="#" class="bg-white rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-slate-100 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-100 transition-all group">
+                    <div class="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-800">{{ $category->name }}</h3>
+                    <p class="text-xs text-slate-400 mt-1">{{ $category->products_count }} Produk</p>
+                </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Produk Terlaris Section -->
+    <section id="produk-terlaris" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900">Produk Terlaris</h2>
+                    <p class="text-slate-500 mt-2">Pilihan favorit pembeli minggu ini</p>
+                </div>
+                <a href="#" class="text-emerald-600 font-medium hover:underline hidden sm:block">Lihat Katalog</a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                @foreach($popularProducts as $product)
+                <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all group">
+                    <div class="aspect-square bg-slate-100 relative overflow-hidden">
+                        <img src="{{ $product->image ? asset('storage/'.$product->image) : 'https://placehold.co/400x400/e2e8f0/64748b?text=Produk' }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-emerald-600 shadow-sm">
+                            Rekomendasi
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs font-medium px-2 py-1 bg-slate-100 text-slate-600 rounded-md">{{ $product->categories->first()->name ?? 'Umum' }}</span>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-1 line-clamp-1">
+                            <a href="{{ route('public.products.show', $product->id) }}" class="hover:text-emerald-600 transition">{{ $product->name }}</a>
+                        </h3>
+                        <p class="text-sm text-slate-500 mb-4 line-clamp-1 flex items-center">
+                            <svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            {{ $product->shop->name }}
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="font-extrabold text-emerald-600 text-lg">
+                                Rp {{ number_format($product->price ?? ($product->variants->first()->price ?? 0), 0, ',', '.') }}
+                            </div>
+                            <a href="{{ route('public.products.show', $product->id) }}" class="w-10 h-10 rounded-full bg-slate-50 hover:bg-emerald-50 flex items-center justify-center text-slate-400 hover:text-emerald-600 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
