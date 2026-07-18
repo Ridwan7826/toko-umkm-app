@@ -114,10 +114,10 @@ Proyek ini dilengkapi dengan skenario pengujian *End-to-End* menggunakan Playwri
 
 ## 🎓 Informasi Penulis
 Aplikasi ini dikembangkan sebagai bagian dari Tugas Akhir/Skripsi.
-- **Nama**: [Nama Anda]
-- **NIM**: [NIM Anda]
-- **Program Studi**: [Program Studi Anda]
-- **Email Akademik**: [Email Akademik Anda]
+- **Nama**: [Muhammad Riduan]
+- **NIM**: [2210010017]
+- **Program Studi**: [ Teknik Informatika]
+- **Email Akademik**: [riduanm500@gmail.com]
 
 ---
 *Dibuat dengan ❤️ untuk kemajuan UMKM Indonesia.*
