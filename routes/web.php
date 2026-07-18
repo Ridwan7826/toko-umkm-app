@@ -21,7 +21,7 @@ use App\Http\Controllers\Buyer\OrderController as BuyerOrderController;
 
 Route::get('/', function () {
     $categories = \App\Models\Category::withCount('products')->take(6)->get();
-    $popularProducts = \App\Models\Product::with(['shop', 'variants', 'categories'])->inRandomOrder()->take(8)->get();
+    $popularProducts = \App\Models\Product::whereNotNull('image')->with(['shop', 'variants', 'categories'])->take(4)->get();
     return view('welcome', compact('categories', 'popularProducts'));
 })->name('home');
 

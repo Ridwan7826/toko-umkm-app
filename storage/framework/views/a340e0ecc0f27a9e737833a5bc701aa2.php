@@ -22,6 +22,7 @@
             <thead class="text-xs text-slate-700 uppercase bg-slate-50">
                 <tr>
                     <th scope="col" class="py-4 px-6">ID</th>
+                    <th scope="col" class="py-4 px-6">Gambar</th>
                     <th scope="col" class="py-4 px-6">Nama Kategori</th>
                     <th scope="col" class="py-4 px-6 text-center">Aksi (Opsi)</th>
                 </tr>
@@ -30,6 +31,13 @@
                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr class="bg-white border-b hover:bg-slate-50 transition">
                     <td class="py-4 px-6 font-semibold"><?php echo e($category->id); ?></td>
+                    <td class="py-4 px-6">
+                        <?php if($category->image): ?>
+                            <img src="<?php echo e(asset('storage/' . $category->image)); ?>" alt="<?php echo e($category->name); ?>" class="w-12 h-12 rounded object-cover">
+                        <?php else: ?>
+                            <div class="w-12 h-12 rounded bg-slate-100 flex items-center justify-center text-slate-400 text-xs">No img</div>
+                        <?php endif; ?>
+                    </td>
                     <td class="py-4 px-6 font-medium text-slate-900"><?php echo e($category->name); ?></td>
                     <td class="py-4 px-6 text-center">
                         <a href="<?php echo e(route('admin.categories.edit', $category->id)); ?>" class="font-medium text-amber-500 hover:text-amber-700 hover:underline mr-3">Ubah</a>
