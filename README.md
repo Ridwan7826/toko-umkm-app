@@ -1,130 +1,123 @@
-# TokoKita - Platform E-Commerce Modern
+# TokoKita
 
-TokoKita adalah platform *e-commerce* mutakhir berarsitektur *Multi-Vendor* yang dirancang untuk mempertemukan pembeli dan penjual dalam satu ekosistem terpadu. Sistem ini dilengkapi dengan manajemen stok canggih berbasis varian, dasbor analitik waktu-nyata, dan sistem *checkout* terintegrasi.
+**TokoKita** adalah sebuah platform aplikasi web *e-commerce* yang dirancang khusus untuk mendukung pelaku Usaha Mikro, Kecil, dan Menengah (UMKM). Platform ini memungkinkan pemilik usaha kecil untuk mendigitalkan bisnis mereka dengan membuka toko online, mengelola inventaris, memproses pesanan, dan menerima pembayaran secara terintegrasi.
 
----
+![Home](docs/screenshots/home.png)
 
-## 🚀 Fitur Unggulan
+## 📌 Fitur Utama
 
-- **Role-Based Access Control (RBAC)**: Tiga peran utama (Admin, Penjual, Pembeli) dengan hak akses terisolasi.
-- **Manajemen Inventaris Multi-Varian**: Sistem inventaris level industri (mendukung variasi seperti Warna dan Ukuran dengan stok independen).
-- **Checkout & State Machine**: Alur pemesanan ketat (`Menunggu -> Dibayar -> Diproses -> Dikirim -> Selesai`) untuk menghindari manipulasi status.
-- **Dasbor KPI Real-Time**: Laporan penjualan dan pergerakan transaksi divisualisasikan dengan **Chart.js**.
-- **Ekspor Dokumen**: Laporan performa dapat diunduh dalam format PDF (DomPDF) dan Excel (Laravel Excel).
-- **Integrasi API Eksternal**: Siap terhubung dengan Midtrans (Payment Gateway) dan RajaOngkir (Logistik).
+Sistem ini melibatkan tiga jenis pengguna utama:
 
----
+### 👤 1. Pembeli (Customer)
+- **Autentikasi & Profil**: Registrasi, login, dan manajemen profil pembeli beserta alamat pengiriman.
+- **Pencarian & Katalog Produk**: Mencari produk, melihat detail produk dengan varian (warna, ukuran, dll).
+- **Keranjang & Checkout**: Menambahkan produk ke keranjang belanja dan melakukan proses checkout. Terintegrasi dengan **API RajaOngkir** untuk penghitungan tarif logistik.
+- **Pembayaran**: Terintegrasi dengan **Midtrans Payment Gateway**.
+- **Pelacakan & Ulasan**: Memantau status pesanan dan memberikan rating/ulasan pada produk.
 
-## 💻 Tumpukan Teknologi (Tech Stack)
+### 🏪 2. Penjual (Pemilik UMKM)
+- **Manajemen Toko**: Mendaftar dan mengelola profil toko.
+- **Manajemen Produk**: Mengelola data produk beserta varian (stok dan harga).
+- **Manajemen Pesanan**: Menerima pesanan, mengubah status pesanan (Diproses, Dikirim), dan memasukkan resi pengiriman.
+- **Laporan & Analitik**: Dasbor penjualan, laporan produk terlaris, rekapitulasi penjualan, laporan pelanggan loyal, dan pencetakan invoice (PDF/Excel).
 
-Sistem ini dibangun di atas fondasi teknologi *open-source* modern:
-
-| Bagian | Teknologi |
-| --- | --- |
-| **Kerangka Kerja (Framework)** | Laravel 10 (PHP 8.2+) |
-| **Basis Data** | MySQL 8.0+ |
-| **Tampilan (Frontend)** | Blade Template Engine, Tailwind CSS, Alpine.js |
-| **Visualisasi Data** | Chart.js |
-| **Pengujian E2E (E2E Testing)** | Microsoft Playwright |
-
----
-
-## 📸 Cuplikan Layar (Screenshots)
-
-*Beberapa cuplikan antarmuka utama aplikasi (Setelah Anda melakukan seed data):*
-
-### 1. Halaman Beranda (Katalog Publik)
-![Halaman Utama](docs/screenshots/home.png)
-
-#### Katalog Kategori
-![Kategori Produk](docs/screenshots/kategori.png)
-
-#### Katalog Produk Terlaris
+![Dashboard Penjual](docs/screenshots/dashboard_seller.png)
 ![Produk Terlaris](docs/screenshots/produk_terlaris.png)
 
-### 2. Detail Produk
-![Detail Produk](docs/screenshots/product_detail.png)
+### 👨‍💻 3. Administrator
+- **Dashboard Utama**: Ringkasan data keseluruhan platform (total pengguna, toko, transaksi).
+- **Manajemen**: Validasi pendaftaran toko dan mengelola data kategori master.
 
-### 3. Halaman Autentikasi
-![Halaman Login](docs/screenshots/login.png)
+![Dashboard Admin](docs/screenshots/dashboard_admin.png)
+![Kategori](docs/screenshots/kategori.png)
 
-### 4. Dasbor Admin
-![Dasbor Admin](docs/screenshots/dashboard_admin.png)
+## 🛠️ Tumpukan Teknologi (Tech Stack)
 
-### 5. Dasbor Penjual (Seller)
-![Dasbor Penjual](docs/screenshots/dashboard_seller.png)
+- **Backend**: Laravel 10 (PHP)
+- **Database**: MySQL
+- **Frontend**: Blade Templating, HTML, CSS, JavaScript, Tailwind CSS
+- **Testing**: Playwright (E2E Testing)
+- **Integrasi Pihak Ketiga**: Midtrans (Pembayaran), RajaOngkir (Pengiriman)
 
----
+## 🚀 Langkah Instalasi
 
-## 🛠️ Panduan Instalasi (Development)
+Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi di lingkungan pengembangan lokal (localhost):
 
-Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi di lingkungan lokal Anda:
-
-1. **Kloning Repositori**
+1. **Clone repositori ini:**
    ```bash
-   git clone https://github.com/[username_anda]/TokoKita.git
-   cd TokoKita
+   git clone https://github.com/Ridwan7826/toko-umkm-app.git
+   cd toko-umkm-app
    ```
 
-2. **Instalasi Dependensi PHP & Node**
+2. **Instal dependensi PHP (Composer):**
    ```bash
    composer install
+   ```
+
+3. **Instal dependensi Node.js (NPM):**
+   ```bash
    npm install
    ```
 
-3. **Pengaturan Lingkungan (.env)**
-   Salin berkas *environment* bawaan dan *generate* kunci aplikasi:
+4. **Konfigurasi Environment:**
+   Salin file konfigurasi contoh lalu sesuaikan kredensial database Anda.
    ```bash
    cp .env.example .env
+   ```
+   Buka file `.env` dan atur konfigurasi `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`.
+   Masukkan juga kredensial API Midtrans dan RajaOngkir Anda.
+
+5. **Generate Application Key:**
+   ```bash
    php artisan key:generate
    ```
-   > **Penting**: Sesuaikan `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di `.env` dengan konfigurasi lokal Anda.
 
-4. **Migrasi dan *Seeding* Basis Data**
-   *Compile* aset *frontend* dan siapkan struktur data:
+6. **Migrasi dan Seed Database:**
+   (Pastikan database kosong sudah dibuat di MySQL)
    ```bash
-   npm run build
-   php artisan migrate:fresh --seed
+   php artisan migrate --seed
    ```
 
-5. **Jalankan Server**
+7. **Buat Symlink untuk Storage Gambar:**
+   ```bash
+   php artisan storage:link
+   ```
+
+8. **Jalankan Aplikasi:**
+   Buka dua terminal terpisah.
+   
+   Terminal 1 (Menjalankan Vite untuk *assets* frontend):
+   ```bash
+   npm run dev
+   ```
+
+   Terminal 2 (Menjalankan server PHP):
    ```bash
    php artisan serve
    ```
-   Aplikasi kini dapat diakses di `http://localhost:8000`.
 
----
+Aplikasi sekarang dapat diakses di `http://127.0.0.1:8000`.
 
-## 🧪 Panduan Pengujian (Playwright E2E)
+## 🧪 Menjalankan Pengujian E2E (Playwright)
 
-Proyek ini dilengkapi dengan skenario *End-to-End* (E2E) menggunakan Playwright untuk menjaga keandalan sistem.
+Proyek ini dilengkapi dengan skenario pengujian *End-to-End* menggunakan Playwright.
 
-1. **Instalasi Playwright Browser**
-   ```bash
-   npx playwright install
-   ```
-
-2. **Jalankan Uji Coba**
-   Pastikan *server* lokal (`php artisan serve`) sedang menyala, lalu buka terminal baru:
+1. **Jalankan pengujian:**
    ```bash
    npx playwright test
    ```
 
-3. **Lihat Laporan Interaktif**
+2. **Lihat laporan hasil pengujian:**
    ```bash
    npx playwright show-report
    ```
 
----
-
-## 👨‍🎓 Identitas Penulis
-
-Dokumen dan aplikasi ini dikembangkan sebagai bagian dari Tugas Akhir / Skripsi.
-
-- **Nama**: [Muhammad Riduan]
-- **NIM**: [2210010017]
-- **Program Studi**: [Teknik Informatika]
-- **Email Akademik**: [riduanm500@gmail.com]
+## 🎓 Informasi Penulis
+Aplikasi ini dikembangkan sebagai bagian dari Tugas Akhir/Skripsi.
+- **Nama**: [Nama Anda]
+- **NIM**: [NIM Anda]
+- **Program Studi**: [Program Studi Anda]
+- **Email Akademik**: [Email Akademik Anda]
 
 ---
-*Dilisensikan di bawah [MIT License](LICENSE).*
+*Dibuat dengan ❤️ untuk kemajuan UMKM Indonesia.*
