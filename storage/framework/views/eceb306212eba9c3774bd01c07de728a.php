@@ -1,4 +1,13 @@
-<x-app-layout>
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\AppLayout::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
     <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         
         <!-- Breadcrumbs -->
@@ -10,24 +19,24 @@
                 <li>
                     <div class="flex items-center">
                         <svg class="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                        <a href="#" class="hover:text-emerald-600 transition-colors">{{ $product->category->name ?? 'Kategori' }}</a>
+                        <a href="#" class="hover:text-emerald-600 transition-colors"><?php echo e($product->category->name ?? 'Kategori'); ?></a>
                     </div>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <svg class="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                        <span class="text-slate-400">{{ Str::limit($product->name, 20) }}</span>
+                        <span class="text-slate-400"><?php echo e(Str::limit($product->name, 20)); ?></span>
                     </div>
                 </li>
             </ol>
         </nav>
 
-        @if (session('success'))
+        <?php if(session('success')): ?>
             <div class="mb-6 bg-emerald-50 text-emerald-800 p-4 rounded-2xl flex items-center gap-3 border border-emerald-200 animate-fade-in-up">
                 <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="font-medium">{{ session('success') }}</span>
+                <span class="font-medium"><?php echo e(session('success')); ?></span>
             </div>
-        @endif
+        <?php endif; ?>
 
         <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-0">
@@ -43,11 +52,12 @@
                 <div class="lg:col-span-3 p-8 lg:p-12 flex flex-col">
                     <div class="mb-2">
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                            {{ $product->category->name ?? 'Kategori Umum' }}
+                            <?php echo e($product->category->name ?? 'Kategori Umum'); ?>
+
                         </span>
                     </div>
                     
-                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 leading-tight">{{ $product->name }}</h1>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 leading-tight"><?php echo e($product->name); ?></h1>
                     
                     <div class="flex items-center gap-4 mb-8 pb-8 border-b border-slate-100">
                         <div class="flex items-center text-amber-400">
@@ -58,9 +68,10 @@
                         <div class="h-5 w-px bg-slate-200"></div>
                         <a href="#" class="flex items-center gap-2 group">
                             <div class="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 text-xs font-bold">
-                                {{ substr($product->shop->name, 0, 1) }}
+                                <?php echo e(substr($product->shop->name, 0, 1)); ?>
+
                             </div>
-                            <span class="font-medium text-slate-600 group-hover:text-indigo-600 transition-colors">{{ $product->shop->name }}</span>
+                            <span class="font-medium text-slate-600 group-hover:text-indigo-600 transition-colors"><?php echo e($product->shop->name); ?></span>
                         </a>
                     </div>
                     
@@ -68,21 +79,22 @@
                         <p class="text-sm font-medium text-slate-500 mb-1">Harga Mulai Dari</p>
                         <!-- We use a placeholder price since variants dictate actual price -->
                         <p class="text-4xl font-extrabold text-slate-900">
-                            Rp {{ number_format(150000, 0, ',', '.') }}
+                            Rp <?php echo e(number_format(150000, 0, ',', '.')); ?>
+
                         </p>
                     </div>
 
                     <div class="prose prose-slate prose-emerald max-w-none mb-10 flex-grow">
                         <h4 class="text-lg font-bold text-slate-800 mb-2">Deskripsi Produk</h4>
-                        <p class="text-slate-600 leading-relaxed">{{ $product->description }}</p>
+                        <p class="text-slate-600 leading-relaxed"><?php echo e($product->description); ?></p>
                     </div>
                     
                     <div class="mt-auto">
-                        <form action="{{ route('buyer.cart.store') }}" method="POST" class="flex flex-col sm:flex-row gap-4">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <form action="<?php echo e(route('buyer.cart.store')); ?>" method="POST" class="flex flex-col sm:flex-row gap-4">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" name="product_id" value="<?php echo e($product->id); ?>">
                             <!-- Assuming user will select a variant from a modal or page later -->
-                            <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id ?? '' }}">
+                            <input type="hidden" name="variant_id" value="<?php echo e($product->variants->first()->id ?? ''); ?>">
                             <input type="hidden" name="quantity" value="1">
                             
                             <button type="submit" class="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
@@ -102,10 +114,10 @@
         <div class="bg-white p-8 lg:p-12 shadow-sm rounded-3xl border border-slate-200">
             <div class="flex items-center justify-between mb-8 border-b border-slate-100 pb-4">
                 <h3 class="text-2xl font-extrabold text-slate-900">Ulasan Pembeli</h3>
-                <span class="bg-slate-100 text-slate-600 font-semibold px-4 py-1.5 rounded-full text-sm">{{ $product->reviews->count() }} Ulasan</span>
+                <span class="bg-slate-100 text-slate-600 font-semibold px-4 py-1.5 rounded-full text-sm"><?php echo e($product->reviews->count()); ?> Ulasan</span>
             </div>
             
-            @if($product->reviews->isEmpty())
+            <?php if($product->reviews->isEmpty()): ?>
                 <div class="text-center py-12">
                     <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
@@ -113,31 +125,42 @@
                     <p class="text-slate-500 text-lg font-medium">Belum ada ulasan untuk produk ini.</p>
                     <p class="text-slate-400 mt-1">Jadilah yang pertama memberikan ulasan setelah membeli!</p>
                 </div>
-            @else
+            <?php else: ?>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    @foreach($product->reviews as $review)
+                    <?php $__currentLoopData = $product->reviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition-shadow">
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
-                                        {{ substr($review->user->name, 0, 2) }}
+                                        <?php echo e(substr($review->user->name, 0, 2)); ?>
+
                                     </div>
                                     <div>
-                                        <div class="font-bold text-slate-900">{{ $review->user->name }}</div>
-                                        <div class="text-xs text-slate-400">{{ $review->created_at->diffForHumans() }}</div>
+                                        <div class="font-bold text-slate-900"><?php echo e($review->user->name); ?></div>
+                                        <div class="text-xs text-slate-400"><?php echo e($review->created_at->diffForHumans()); ?></div>
                                     </div>
                                 </div>
                                 <div class="flex text-amber-400 bg-white px-2 py-1 rounded-full shadow-sm border border-slate-100">
-                                    @for($i = 0; $i < 5; $i++)
-                                        <svg class="w-3.5 h-3.5 {{ $i < $review->rating ? 'fill-current' : 'text-slate-200 fill-current' }}" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                    @endfor
+                                    <?php for($i = 0; $i < 5; $i++): ?>
+                                        <svg class="w-3.5 h-3.5 <?php echo e($i < $review->rating ? 'fill-current' : 'text-slate-200 fill-current'); ?>" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                    <?php endfor; ?>
                                 </div>
                             </div>
-                            <p class="text-slate-600 leading-relaxed italic">"{{ $review->comment }}"</p>
+                            <p class="text-slate-600 leading-relaxed italic">"<?php echo e($review->comment); ?>"</p>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
-</x-app-layout>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php /**PATH C:\laragon\www\Toko_Kita\resources\views/public/products/show.blade.php ENDPATH**/ ?>

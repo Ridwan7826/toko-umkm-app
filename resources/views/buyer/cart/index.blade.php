@@ -5,7 +5,7 @@
 
     <div class="mb-6 flex justify-between items-center">
         <p class="text-slate-500">Kelola data Keranjang Belanja dengan mudah melalui tabel interaktif di bawah ini.</p>
-        <a href="{{ route('public.products.index') }}" class="px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition shadow-sm font-medium">+ Belanja Lagi</a>
+        <a href="{{ url('/') }}" class="px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition shadow-sm font-medium">+ Belanja Lagi</a>
     </div>
     
     <div class="overflow-x-auto relative shadow-sm rounded-xl border border-slate-200 mb-6">
@@ -61,7 +61,7 @@
 
     @if($carts->count() > 0)
     <div class="flex justify-end">
-        <a href="{{ route('buyer.checkout.index') }}" class="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition shadow-sm font-medium">Lanjut ke Checkout</a>
+        <a href="#" class="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition shadow-sm font-medium">Lanjut ke Checkout</a>
     </div>
     @endif
 </x-app-layout>

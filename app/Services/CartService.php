@@ -10,7 +10,7 @@ class CartService
     public function getUserCart($userId)
     {
         return Cart::where('user_id', $userId)
-            ->with(['product', 'variant'])
+            ->with(['variant.product'])
             ->latest()
             ->get();
     }
@@ -18,8 +18,7 @@ class CartService
     public function addToCart($userId, array $data)
     {
         $existingCart = Cart::where('user_id', $userId)
-            ->where('product_id', $data['product_id'])
-            ->where('product_variant_id', $data['product_variant_id'] ?? null)
+            ->where('variant_id', $data['variant_id'])
             ->first();
 
         if ($existingCart) {
@@ -29,8 +28,7 @@ class CartService
 
         return Cart::create([
             'user_id' => $userId,
-            'product_id' => $data['product_id'],
-            'product_variant_id' => $data['product_variant_id'] ?? null,
+            'variant_id' => $data['variant_id'],
             'quantity' => $data['quantity'] ?? 1,
         ]);
     }
