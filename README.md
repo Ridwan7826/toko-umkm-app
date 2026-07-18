@@ -33,11 +33,20 @@ Sistem ini dibangun di atas fondasi teknologi *open-source* modern:
 
 *Beberapa cuplikan antarmuka utama aplikasi (Setelah Anda melakukan seed data):*
 
-### Halaman Autentikasi
+### 1. Halaman Beranda (Katalog Publik)
+![Halaman Utama](docs/screenshots/home.png)
+
+### 2. Detail Produk
+![Detail Produk](docs/screenshots/product_detail.png)
+
+### 3. Halaman Autentikasi
 ![Halaman Login](docs/screenshots/login.png)
 
-### Dasbor Penjual (Contoh)
-*(Gambar akan tersedia setelah Anda mengelola pesanan pertama Anda)*
+### 4. Dasbor Admin
+![Dasbor Admin](docs/screenshots/dashboard_admin.png)
+
+### 5. Dasbor Penjual (Seller)
+![Dasbor Penjual](docs/screenshots/dashboard_seller.png)
 
 ---
 
