@@ -189,8 +189,12 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                 @foreach($categories as $category)
                 <a href="#" class="bg-white rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-slate-100 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-100 transition-all group">
-                    <div class="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <div class="w-16 h-16 rounded-full overflow-hidden mb-4 group-hover:scale-110 transition-transform shadow-sm bg-emerald-50 flex items-center justify-center text-emerald-600">
+                        @if($category->image)
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="w-full h-full object-cover">
+                        @else
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        @endif
                     </div>
                     <h3 class="font-semibold text-slate-800">{{ $category->name }}</h3>
                     <p class="text-xs text-slate-400 mt-1">{{ $category->products_count }} Produk</p>

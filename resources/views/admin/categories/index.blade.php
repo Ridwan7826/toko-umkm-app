@@ -13,6 +13,7 @@
             <thead class="text-xs text-slate-700 uppercase bg-slate-50">
                 <tr>
                     <th scope="col" class="py-4 px-6">ID</th>
+                    <th scope="col" class="py-4 px-6">Gambar</th>
                     <th scope="col" class="py-4 px-6">Nama Kategori</th>
                     <th scope="col" class="py-4 px-6 text-center">Aksi (Opsi)</th>
                 </tr>
@@ -21,6 +22,13 @@
                 @foreach($categories as $category)
                 <tr class="bg-white border-b hover:bg-slate-50 transition">
                     <td class="py-4 px-6 font-semibold">{{ $category->id }}</td>
+                    <td class="py-4 px-6">
+                        @if($category->image)
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="w-12 h-12 rounded object-cover">
+                        @else
+                            <div class="w-12 h-12 rounded bg-slate-100 flex items-center justify-center text-slate-400 text-xs">No img</div>
+                        @endif
+                    </td>
                     <td class="py-4 px-6 font-medium text-slate-900">{{ $category->name }}</td>
                     <td class="py-4 px-6 text-center">
                         <a href="{{ route('admin.categories.edit', $category->id) }}" class="font-medium text-amber-500 hover:text-amber-700 hover:underline mr-3">Ubah</a>

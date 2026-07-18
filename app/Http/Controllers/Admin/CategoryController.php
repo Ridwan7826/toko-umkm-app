@@ -31,9 +31,10 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
-        $this->categoryService->createCategory($request->only('name'));
+        $this->categoryService->createCategory($request->all());
 
         return redirect()->route('admin.categories.index')->with('success', 'Berhasil!');
     }
@@ -52,9 +53,10 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
-        $this->categoryService->updateCategory($category, $request->only('name'));
+        $this->categoryService->updateCategory($category, $request->all());
 
         return redirect()->route('admin.categories.index')->with('success', 'Berhasil!');
     }
